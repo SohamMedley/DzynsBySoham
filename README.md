@@ -1,7 +1,6 @@
-# SohamPortfolio
 # Soham Medley - Graphic Designer Portfolio
 
-![Portfolio Preview](https://placeholder.com/1200x630)
+![Portfolio Preview](screenshot.jpg)
 
 ## 🎨 Project Overview
 
