@@ -1,6 +1,6 @@
 # ✨ Dzyns by Soham - Graphic Designer Portfolio
 
-![Portfolio Preview](https://raw.githubusercontent.com/SohamMedley/DzynsBySoham/main/screenshot.jpg)
+![Portfolio Preview](https://raw.githubusercontent.com/SohamMedley/DzynsBySoham/main/screenshot.png)
 
 ## 🚀 **Welcome to Dzyns by Soham**
 
