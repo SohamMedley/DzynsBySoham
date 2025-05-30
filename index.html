@@ -1,224 +1,1044 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark-theme">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dzyns by Soham</title>
-    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>dzynsbysoham | Invoice</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --background: #ffffff;
+      --surface: #f5f5f7;
+      --surface-alt: #fafafa;
+      --primary: #000000;
+      --secondary: #86868b;
+      --tertiary: #6e6e73;
+      --accent: #0071e3;
+      --accent-light: #147ce5;
+      --divider: #d2d2d7;
+      --card-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+      --text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    /* Dark theme as default */
+    .dark-theme {
+      --background: #000000;
+      --surface: #1d1d1f;
+      --surface-alt: #151516;
+      --primary: #f5f5f7;
+      --secondary: #a1a1a6;
+      --tertiary: #86868b;
+      --divider: #424245;
+      --card-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Light theme override */
+    .light-theme {
+      --background: #ffffff;
+      --surface: #f5f5f7;
+      --surface-alt: #fafafa;
+      --primary: #000000;
+      --secondary: #86868b;
+      --tertiary: #6e6e73;
+      --accent: #0071e3;
+      --accent-light: #147ce5;
+      --divider: #d2d2d7;
+      --card-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+      --text-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+      background-color: var(--background);
+      color: var(--primary);
+      line-height: 1.6;
+      font-weight: 400;
+      letter-spacing: -0.01em;
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 60px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .invoice-info {
+      text-align: right;
+    }
+
+    .invoice-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      color: var(--secondary);
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+
+    .invoice-number {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .invoice-date {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      color: var(--secondary);
+      margin-top: 4px;
+      font-weight: 400;
+    }
+
+    /* Client Section */
+    .section {
+      margin-bottom: 60px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .section.client {
+      animation: fadeInUp 0.8s ease 0.1s forwards;
+    }
+
+    .section-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--secondary);
+      margin-bottom: 16px;
+      font-weight: 500;
+    }
+
+    .client-card {
+      background-color: var(--surface);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .client-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .client-name {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+
+    .client-description {
+      font-family: 'Poppins', sans-serif;
+      color: var(--secondary);
+      font-size: 16px;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    /* Work Section */
+    .section.work {
+      animation: fadeInUp 0.8s ease 0.2s forwards;
+    }
+
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    .work-item {
+      background-color: var(--surface);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .work-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .work-item:nth-child(1) { animation: fadeInUp 0.6s ease 0.3s forwards; }
+    .work-item:nth-child(2) { animation: fadeInUp 0.6s ease 0.4s forwards; }
+    .work-item:nth-child(3) { animation: fadeInUp 0.6s ease 0.5s forwards; }
+    .work-item:nth-child(4) { animation: fadeInUp 0.6s ease 0.6s forwards; }
+    .work-item:nth-child(5) { animation: fadeInUp 0.6s ease 0.7s forwards; }
+
+    .work-media {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .work-media video {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background-color: var(--surface-alt);
+    }
+
+    .work-media video::-webkit-media-controls-panel {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .work-item:hover .work-media {
+      transform: scale(1.03);
+    }
+
+    .work-content {
+      padding: 20px;
+    }
+
+    .work-category {
+      font-family: 'Poppins', sans-serif;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .work-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+
+    .work-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 16px;
+    }
+
+    .work-date {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      color: var(--secondary);
+      font-weight: 400;
+    }
+
+    .work-price {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* Summary Section */
+    .section.summary {
+      animation: fadeInUp 0.8s ease 0.8s forwards;
+    }
+
+    .summary-card {
+      background-color: var(--surface);
+      border-radius: 16px;
+      padding: 30px;
+      box-shadow: var(--card-shadow);
+    }
+
+    .summary-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    .summary-row:last-child {
+      border-bottom: none;
+    }
+
+    .summary-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      color: var(--secondary);
+      font-weight: 400;
+    }
+
+    .summary-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .summary-total {
+      margin-top: 20px;
+      padding-top: 20px;
+      border-top: 2px solid var(--divider);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .total-label {
+      font-family: 'Poppins', sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .total-value {
+      font-family: 'Poppins', sans-serif;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    /* Payment Section */
+    .section.payment {
+      animation: fadeInUp 0.8s ease 0.9s forwards;
+      text-align: center;
+    }
+
+    .qr-container {
+      background-color: var(--surface);
+      border-radius: 16px;
+      padding: 30px;
+      display: inline-block;
+      margin: 30px 0;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .qr-container:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+    }
+
+    .qr-code {
+      width: 200px;
+      height: 200px;
+      border-radius: 8px;
+    }
+
+    .payment-instruction {
+      font-family: 'Poppins', sans-serif;
+      font-size: 16px;
+      color: var(--secondary);
+      margin: 16px 0;
+      font-weight: 400;
+    }
+
+    .button {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-decoration: none;
+      margin: 0 8px;
+    }
+
+    .button:hover {
+      background-color: var(--accent-light);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 113, 227, 0.3);
+    }
+
+    .button:active {
+      transform: translateY(0);
+    }
+
+    .button.secondary {
+      background-color: rgba(0, 113, 227, 0.1);
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    .button.secondary:hover {
+      background-color: rgba(0, 113, 227, 0.2);
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 0 20px;
+      opacity: 0;
+      animation: fadeIn 0.8s ease 1s forwards;
+    }
+
+    .footer-text {
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      color: var(--secondary);
+      margin-bottom: 16px;
+      font-weight: 400;
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    /* Theme Toggle */
+    .theme-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: var(--surface);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--card-shadow);
+      z-index: 100;
+      transition: all 0.3s ease;
+      border: 1px solid var(--divider);
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .theme-toggle svg {
+      width: 20px;
+      height: 20px;
+      fill: var(--primary);
+      transition: fill 0.3s ease;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .container {
+        padding: 30px 16px;
+      }
+
+      .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+
+      .invoice-info {
+        text-align: left;
+      }
+
+      .work-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .client-card, .summary-card {
+        padding: 24px;
+      }
+      
+      .social-buttons {
+        flex-direction: column;
+        gap: 12px;
+      }
+    }
+
+    /* Scroll Indicator */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background-color: var(--accent);
+      z-index: 100;
+      width: 0%;
+      transition: width 0.1s ease;
+    }
+
+    /* Dark theme specific adjustments */
+    .dark-theme .work-item:hover {
+      box-shadow: 0 4px 24px rgba(255, 255, 255, 0.05);
+    }
+
+    .dark-theme .client-card:hover {
+      box-shadow: 0 4px 24px rgba(255, 255, 255, 0.05);
+    }
+
+    .dark-theme .qr-container:hover {
+      box-shadow: 0 4px 24px rgba(255, 255, 255, 0.05);
+    }
+    
+    /* Modal for QR code download */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .modal.show {
+      display: flex;
+      opacity: 1;
+    }
+    
+    .modal-content {
+      background-color: var(--surface);
+      border-radius: 16px;
+      padding: 30px;
+      max-width: 90%;
+      width: 350px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+    
+    .modal.show .modal-content {
+      transform: translateY(0);
+    }
+    
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 24px;
+      height: 24px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--secondary);
+      font-size: 24px;
+      line-height: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .modal-title {
+      font-family: 'Poppins', sans-serif;
+      font-size: 20px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+    
+    .modal-qr {
+      width: 250px;
+      height: 250px;
+      margin: 0 auto 20px;
+      border-radius: 8px;
+    }
+    
+    .modal-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .modal-button {
+      font-family: 'Poppins', sans-serif;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .modal-button.primary {
+      background-color: var(--accent);
+      color: white;
+      border: none;
+    }
+    
+    .modal-button.secondary {
+      background-color: transparent;
+      color: var(--accent);
+      border: 1px solid var(--accent);
+    }
+
+    /* Hidden download link */
+    .hidden-download {
+      display: none;
+    }
+
+    /* Force Poppins font on all text elements */
+    h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, label {
+      font-family: 'Poppins', sans-serif !important;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <nav>
-            <a href="#home">Home</a>
-            <a href="#about">About</a>
-            <a href="#portfolio">Portfolio</a>
-	  <!--  <a href="#music">Music</a> -->
-            <a href="#contact">Contact</a>
-        </nav>
+  <!-- Scroll Indicator -->
+  <div class="scroll-indicator" id="scrollIndicator"></div>
+
+  <!-- Theme Toggle -->
+  <div class="theme-toggle" id="themeToggle">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" id="themeIcon">
+      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/>
+    </svg>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">dzyns<span>by</span>soham</div>
+      <div class="invoice-info">
+        <div class="invoice-label">Invoice</div>
+        <div class="invoice-number">INV-004</div>
+        <div class="invoice-date">May 31, 2025</div>
+      </div>
     </header>
 
-    <main>
-        <section id="home" class="hero">
-            <div class="background-gradient"></div>
-            <div class="shapes-container">
-                <div class="elegant-shape shape1"></div>
-                <div class="elegant-shape shape2"></div>
-                <div class="elegant-shape shape3"></div>
-                <div class="elegant-shape shape4"></div>
-                <div class="elegant-shape shape5"></div>
+    <!-- Work Section -->
+    <section class="section work">
+      <h2 class="section-title">Work Delivered</h2>
+      <div class="work-grid">
+        <div class="work-item">
+          <img src="images/Glitch Thumbnil-1.jpg" alt="Thumbnail 1" class="work-media">
+          <div class="work-content">
+            <div class="work-category">Thumbnail Design</div>
+            <div class="work-title">SEEDHEMAUT - DL91 Review</div>
+            <div class="work-meta">
+              <div class="work-date">18 May 2025</div>
+              <div class="work-price">₹100</div>
             </div>
-            <div class="content">
-                <div class="badge">
-                
-                </div>
-                <h1>
-                    <span class="title1">Dzyns by Soham</span>
-                    <br>
-                    <span class="title2">Creative Vision</span>
-                </h1>
-                <p>Turning ideas into captivating visual experiences while also specializing in mixing and mastering. With 4 years of crafting beautiful designs and sound.</p>
-            </div>
-            <div class="overlay-gradient"></div>
-        </section>
-
-        <section id="about" class="about">
-            <h2>About Me</h2>
-            <p>Welcome to <b>Dzyns by Soham</b> where creativity meets precision! With <u>3+</u> years of experience, I specialize in crafting <i>stunning, high-impact </i>designs that grab attention and leave a lasting impression. <br><br>
-
-<b> What I Do:</b><br>
-🎨 <u>Eye-Catching Designs</u> – From posters to thumbnails, each piece is designed to captivate.<br>
-🔹 <u>Brand Identity & Aesthetics</u> – Elevating your brand with visuals that truly represent its essence.<br>
-📱 <u>Social Media Graphics</u> – Creating content that stops the scroll and demands attention.<br>
-🖌️ <u>Creative & Strategic Approach</u> – Every pixel is placed with precision and intent.<br>
-📢 <u>Designs That Speak</u> – More than just visuals; every design tells a story.<br>
-</p>
-        </section>
-
-
-       <section id="portfolio" class="portfolio">
-    <h2>My Portfolio</h2>
-
-    <div class="portfolio-section">
-        <h3>| Vlog Designs</h3>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="images/Vlog1.png" alt="Vlog Design">
-                <h4>Regular Vlog Design</h4>
-            </div>
-           <div class="portfolio-item">
-                <img src="images/Vlog2.png" alt="Vlog Design">
-                <h4>Concept Vlog Design</h4>
-            </div>
-         <!--    <div class="portfolio-item">
-                <img src="images/Vlog3.png" alt="Vlog Design">
-                <h4>Vlog Design</h4>
-        -->    </div>
+          </div>
         </div>
-    </div>
-<br>
-<div class="portfolio-section">
-        <h3>| Gaming Designs</h3>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="images/Gaming1.png" alt="Gaming Design">
-                <h4>Gaming Montage Video Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Gaming2.png" alt="Gaming Design">
-                <h4>Gaming Live Stream Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Gaming3.png" alt="Gaming Design">
-                <h4>Gaming Live Stream Design</h4>
-            </div>
-        </div>
-    </div>
-<br>
-<div class="portfolio-section">
-        <h3>| Hiphop Content Designs</h3>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="images/Hiphop1.png" alt="Hiphop Design">
-                <h4>Rap Reaction Video Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Hiphop2.png" alt="Hiphop Design">
-                <h4>Rap Live Stream Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Hiphop3.png" alt="Hiphop Design">
-                <h4>Rap Debate Stream Design</h4>
-            </div>
-        </div>
-    </div>
-<br>
-<div class="portfolio-section">
-        <h3>| Tech Review Designs</h3>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="images/Tech1.png" alt="Tech Review Design">
-                <h4>Laptop Review Design</h4>
-            </div>
-          <div class="portfolio-item">
-                <img src="images/Tech2.png" alt="Tech Review Design">
-                <h4>AudioTool Review Design</h4>
-           <!--   </div>
-            <div class="portfolio-item">
-                <img src="images/Tech3.png" alt="Tech Review Design">
-                <h4>Tech Review Design</h4>
-         -->   </div>
-        </div>
-    </div>
-<br>
-<!--<div class="portfolio-section">
-        <h3>| Finance Designs</h3>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="images/Fin1.png" alt="Finance Design">
-                <h4>Finance Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Fin2.png" alt="Finance Design">
-                <h4>Finance Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Fin3.png" alt="Finance Design">
-                <h4>Finance Design</h4>
-            </div>
-        </div>
-   --> </div>
-<br>
-<div class="portfolio-section">
-        <h3>| Educational Designs</h3>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="images/Edu1.png" alt="Educational Design">
-                <h4>Programming Course Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Edu2.png" alt="Educational Design">
-                <h4>Cricket Analysis Video Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Edu3.png" alt="Educational Design">
-                <h4>Educational Design</h4>
-            </div>
-        </div>
-    </div>
-<br>
-<!--<div class="portfolio-section">
-        <h3>| Vlog Designs</h3>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="images/Vlog1.png" alt="Vlog Design">
-                <h4>Vlog Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Vlog2.png" alt="Vlog Design">
-                <h4>Vlog Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Vlog3.png" alt="Vlog Design">
-                <h4>Vlog Design</h4>
-            </div>
-        </div>
- -->   </div>
-<br>
-<div class="portfolio-section">
-        <h3>| Rap/Music Poster Designs</h3>
-        <div class="portfolio-grid">
-            <div class="portfolio-item">
-                <img src="images/Rap1.png" alt="Rap/Music Poster Design">
-                <h4>Rap Poster Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Rap2.png" alt="Rap/Music Poster Design">
-                <h4>Mashup Poster Design</h4>
-            </div>
-            <div class="portfolio-item">
-                <img src="images/Rap3.png" alt="Rap/Music Poster Design">
-                <h4>Rap Banner Design</h4>
-            </div>
-        </div>
-    </div>
-</section>
 
+        <div class="work-item">
+          <img src="images/Glitch Thumbnil-2.jpg" alt="Thumbnail 2" class="work-media">
+          <div class="work-content">
+               <div class="work-category">Thumbnail Design</div>
+            <div class="work-title">RAWAL - Sherdil Review</div>
+            <div class="work-meta">
+              <div class="work-date">18 May 2025</div>
+              <div class="work-price">₹100</div>
+            </div>
+          </div>
+        </div>
 
+        <div class="work-item">
+          <img src="images/Glitch Thumbnil-3.jpg" alt="Thumbnail 3" class="work-media">
+          <div class="work-content">
+            <div class="work-category">Thumbnail Design</div>
+            <div class="work-title">KR$NA - Your's Truely Reaction Live</div> 
+            <div class="work-meta">
+              <div class="work-date">21 May 2025</div>
+              <div class="work-price">₹100</div>
+            </div>
+          </div>
+        </div>
 
+        <div class="work-item">
+          <img src="images/Glitch Thumbnil-4.jpg" alt="Thumbnail 4" class="work-media">
+          <div class="work-content">
+         <div class="work-category">Thumbnail Design</div>
+            <div class="work-title">EMIWAY - TTSMW</div>
+            <div class="work-meta">
+              <div class="work-date">24 May 2025</div>
+              <div class="work-price">₹100</div>
+            </div>
+          </div>
+        </div>
 
-        <section id="contact" class="contact">
-            <h2>Get in Touch</h2>
-            <p>Ready to bring your ideas to life? Let's create something amazing together!</p>
-            <a href="https://www.instagram.com/dzynsbysoham" class="cta-button">Contact Me on Instagram</a>
-        </section>
-    </main>
+        <div class="work-item">
+          <video controls class="work-media" poster="images/Glitch Reel Cover.png" preload="metadata">
+            <source src="images/Glitch%20Reel%20Edit.mp4" type="video/mp4">
+            <source src="images/Glitch Reel Edit.mp4" type="video/mp4">
+            <p>Your browser does not support the video tag. <a href="images/Glitch Reel Edit.mp4" download>Download the video</a></p>
+          </video>
+          <div class="work-content">
+            <div class="work-category">Video Editing</div>
+            <div class="work-title">Glitch X Enigma Reel Edit</div>
+            <div class="work-meta">
+              <div class="work-date">27 May 2025</div>
+              <div class="work-price">₹325</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <footer>
-        <p>&copy; 2025 dzynsbysoham. All rights reserved.</p>
+    <!-- Summary Section -->
+    <section class="section summary">
+      <h2 class="section-title">Invoice Summary</h2>
+      <div class="summary-card">
+        <div class="summary-row">
+          <div class="summary-label">Thumbnail Designs (4)</div>
+          <div class="summary-value">₹400</div>
+        </div>
+        <div class="summary-row">
+          <div class="summary-label">Reel Edit (1)</div>
+          <div class="summary-value">₹325</div>
+        </div>
+        <div class="summary-total">
+          <div class="total-label">Total Amount</div>
+          <div class="total-value">₹725</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Payment Section -->
+    <section class="section payment">
+      <h2 class="section-title">Payment Details</h2>
+      <div class="qr-container">
+        <img src="images/pay.png" alt="UPI QR Code" class="qr-code" id="qrCode">
+      </div>
+      <p class="payment-instruction">Scan to pay via UPI</p>
+      <button class="button" id="showQRModal">View & Download QR Code</button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p class="footer-text">Thank you for our service!</p>
+      <p class="footer-text">© 2025 dzynsbysoham. All rights reserved.</p>
     </footer>
+  </div>
+  
+  <!-- QR Code Modal -->
+  <div class="modal" id="qrModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal">×</button>
+      <h3 class="modal-title">UPI Payment QR Code</h3>
+      <img src="images/pay.png" alt="UPI QR Code" class="modal-qr" id="modalQrCode" crossorigin="anonymous">
+      <p>Scan with any UPI app to pay</p>
+      <div class="modal-buttons">
+        <button class="modal-button primary" id="downloadQR">Download QR</button>
+        <button class="modal-button secondary" id="copyLink">Copy Link</button>
+      </div>
+    </div>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Hidden download link for fallback -->
+  <a id="hiddenDownloadLink" class="hidden-download" download="dzynsbysoham_UPI_QR.png"></a>
+
+  <script>
+    // Set dark theme as default
+    document.documentElement.classList.add('dark-theme');
+    
+    // Theme Toggle
+    const themeToggle = document.getElementById('themeToggle');
+    const themeIcon = document.getElementById('themeIcon');
+    
+    function updateThemeIcon(isDark) {
+      if (isDark) {
+        // Moon icon for dark mode
+        themeIcon.innerHTML = '<path d="M12 22C17.5228 22 22 17.5228 22 12C22 11.5373 21.3065 11.4608 21.0672 11.8568C19.9289 13.7406 17.8615 15 15.5 15C11.9101 15 9 12.0899 9 8.5C9 6.13845 10.2594 4.07105 12.1432 2.93276C12.5392 2.69347 12.4627 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z"/>';
+      } else {
+        // Sun icon for light mode
+        themeIcon.innerHTML = '<path d="M12 18C8.68629 18 6 15.3137 6 12C6 8.68629 8.68629 6 12 6C15.3137 6 18 8.68629 18 12C18 15.3137 15.3137 18 12 18ZM11 1H13V4H11V1ZM11 20H13V23H11V20ZM3.5 5.5L4.91 4.09L7.03 6.2L5.62 7.61L3.5 5.5ZM16.95 17.96L18.36 16.55L20.48 18.66L19.07 20.07L16.95 17.96ZM19.07 3.93L20.48 5.34L18.36 7.45L16.95 6.04L19.07 3.93ZM5.62 16.39L7.03 17.8L4.91 19.91L3.5 18.5L5.62 16.39ZM23 11V13H20V11H23ZM4 11V13H1V11H4Z"/>';
+      }
+    }
+
+    // Initialize with dark theme
+    updateThemeIcon(true);
+
+    // Toggle theme
+    themeToggle.addEventListener('click', () => {
+      const isDark = document.documentElement.classList.contains('dark-theme');
+      
+      if (isDark) {
+        document.documentElement.classList.remove('dark-theme');
+        document.documentElement.classList.add('light-theme');
+        updateThemeIcon(false);
+      } else {
+        document.documentElement.classList.remove('light-theme');
+        document.documentElement.classList.add('dark-theme');
+        updateThemeIcon(true);
+      }
+      
+      // Add subtle animation
+      themeToggle.style.transform = 'scale(0.9)';
+      setTimeout(() => {
+        themeToggle.style.transform = 'scale(1)';
+      }, 200);
+    });
+
+    // QR Code Modal
+    const modal = document.getElementById('qrModal');
+    const showModalBtn = document.getElementById('showQRModal');
+    const closeModalBtn = document.getElementById('closeModal');
+    const downloadQRBtn = document.getElementById('downloadQR');
+    const copyLinkBtn = document.getElementById('copyLink');
+    const hiddenDownloadLink = document.getElementById('hiddenDownloadLink');
+    
+    // Show modal
+    showModalBtn.addEventListener('click', () => {
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden'; // Prevent scrolling
+    });
+    
+    // Close modal
+    closeModalBtn.addEventListener('click', () => {
+      modal.classList.remove('show');
+      document.body.style.overflow = '';
+    });
+    
+    // Close modal when clicking outside
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+      }
+    });
+    
+    // Download QR Code - Multiple fallback methods
+    downloadQRBtn.addEventListener('click', async function() {
+      const qrImage = document.getElementById('modalQrCode');
+      const originalText = this.textContent;
+      
+      try {
+        // Method 1: Try fetch + blob approach
+        const response = await fetch(qrImage.src);
+        if (response.ok) {
+          const blob = await response.blob();
+          const url = URL.createObjectURL(blob);
+          
+          // Try direct download
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = 'dzynsbysoham_UPI_QR.png';
+          link.style.display = 'none';
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          
+          // Clean up
+          setTimeout(() => URL.revokeObjectURL(url), 1000);
+          
+          // Success feedback
+          this.textContent = 'Downloaded!';
+          this.style.backgroundColor = '#34c759';
+          setTimeout(() => {
+            this.textContent = originalText;
+            this.style.backgroundColor = '';
+          }, 2000);
+          
+          return;
+        }
+      } catch (error) {
+        console.log('Fetch method failed, trying canvas method');
+      }
+      
+      try {
+        // Method 2: Canvas approach
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Wait for image to load if not already loaded
+        if (!qrImage.complete) {
+          await new Promise((resolve) => {
+            qrImage.onload = resolve;
+          });
+        }
+        
+        canvas.width = qrImage.naturalWidth || qrImage.width;
+        canvas.height = qrImage.naturalHeight || qrImage.height;
+        
+        ctx.drawImage(qrImage, 0, 0);
+        
+        // Convert to blob
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'dzynsbysoham_UPI_QR.png';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            setTimeout(() => URL.revokeObjectURL(url), 1000);
+            
+            // Success feedback
+            this.textContent = 'Downloaded!';
+            this.style.backgroundColor = '#34c759';
+            setTimeout(() => {
+              this.textContent = originalText;
+              this.style.backgroundColor = '';
+            }, 2000);
+          }
+        }, 'image/png');
+        
+        return;
+      } catch (error) {
+        console.log('Canvas method failed, trying direct link method');
+      }
+      
+      try {
+        // Method 3: Direct link approach (fallback)
+        hiddenDownloadLink.href = qrImage.src;
+        hiddenDownloadLink.click();
+        
+        // Success feedback
+        this.textContent = 'Downloaded!';
+        this.style.backgroundColor = '#34c759';
+        setTimeout(() => {
+          this.textContent = originalText;
+          this.style.backgroundColor = '';
+        }, 2000);
+      } catch (error) {
+        // Method 4: Last resort - open in new tab
+        window.open(qrImage.src, '_blank');
+        this.textContent = 'Opened in new tab';
+        setTimeout(() => {
+          this.textContent = originalText;
+        }, 2000);
+      }
+    });
+    
+    // Copy link functionality
+    copyLinkBtn.addEventListener('click', async function() {
+      const qrImage = document.getElementById('modalQrCode');
+      const originalText = this.textContent;
+      
+      try {
+        // Get the full URL of the image
+        const fullUrl = new URL(qrImage.src, window.location.href).href;
+        
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          await navigator.clipboard.writeText(fullUrl);
+          this.textContent = 'Copied!';
+        } else {
+          // Fallback for older browsers
+          const textArea = document.createElement('textarea');
+          textArea.value = fullUrl;
+          textArea.style.position = 'fixed';
+          textArea.style.opacity = '0';
+          document.body.appendChild(textArea);
+          textArea.select();
+          document.execCommand('copy');
+          document.body.removeChild(textArea);
+          this.textContent = 'Copied!';
+        }
+        
+        setTimeout(() => {
+          this.textContent = originalText;
+        }, 2000);
+      } catch (error) {
+        this.textContent = 'Copy failed';
+        setTimeout(() => {
+          this.textContent = originalText;
+        }, 2000);
+      }
+    });
+
+    // Scroll indicator
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollPercentage = (scrollTop / scrollHeight) * 100;
+      document.getElementById('scrollIndicator').style.width = `${scrollPercentage}%`;
+    });
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, { threshold: 0.1 });
+
+    // Observe all work items
+    document.querySelectorAll('.work-item').forEach(item => {
+      observer.observe(item);
+    });
+
+    // Generate current date
+    function setCurrentDate() {
+      const now = new Date();
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      document.querySelector('.invoice-date').textContent = now.toLocaleDateString('en-US', options);
+    }
+
+    setCurrentDate();
+
+    // Set constant invoice number
+    document.querySelector('.invoice-number').textContent = 'INV-004';
+
+    // Subtle hover effect for cards
+    document.querySelectorAll('.work-item, .client-card, .summary-card, .qr-container').forEach(card => {
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = 'translateY(-2px)';
+      });
+      
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+  </script>
 </body>
 </html>
-
