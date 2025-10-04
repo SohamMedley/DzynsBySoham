@@ -1,3 +1,7 @@
+🌐 **Website:** [dzynsbysoham.onrender.com](https://dzynsbysoham.onrender.com)  
+📷 **Instagram:** [@sohammedleyofficial](https://www.instagram.com/dzynsbysohham/)  
+📧 **Email:** dzynsbysoham@gmail.com  
+
 # ✨ Dzyns by Soham - Graphic Designer Portfolio
 
 ![Portfolio Preview](https://raw.githubusercontent.com/SohamMedley/DzynsBySoham/main/screenshot.png)
@@ -44,9 +48,7 @@ Want to explore our portfolio locally? Follow these simple steps:
 
 💡 Have a project in mind? Let's bring your vision to life!  
 
-🌐 **Website:** [dzynsbysoham.netlify.app](https://dzynsbysoham.netlify.app/)  
-📷 **Instagram:** [@sohammedleyofficial](https://www.instagram.com/dzynsbysohham/)  
-📧 **Email:** businessbysoham@gmail.com  
+
 
 ---
 ✨ _Designs that captivate, inspire, and tell your story._ 🎨
